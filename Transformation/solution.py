@@ -1,6 +1,7 @@
 encoded_flag = '灩捯䍔䙻ㄶ形楴獟楮獴㌴摟潦弸彤㔲挶戹㍽'
 
 # How the flag got encrypted
+flag = 'TEST'
 enc = ''.join(
     [
         chr(
@@ -13,12 +14,14 @@ enc = ''.join(
         ]
     )
 
-# Attempt to reverse the process
-flag = ''.join(
-    [
-        chr(
-            (ord(enc[i]) >> 8) + ord(enc[i + 1])
-            ) for i in range(0, len(enc), 2)
-        ]
-    )
-print(flag)
+# Reverse the process
+unicode_list = [ord(char) for char in encoded_flag]
+
+flag_list = []
+for element in unicode_list:
+    second = element%256
+    first = (element - second) >> 8
+    flag_list.append(chr(first))
+    flag_list.append(chr(second))
+
+print(''.join(flag_list))
